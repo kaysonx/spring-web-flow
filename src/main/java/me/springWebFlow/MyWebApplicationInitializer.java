@@ -14,7 +14,7 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
         // Load Spring web application configuration
         AnnotationConfigWebApplicationContext cxt = new AnnotationConfigWebApplicationContext();
-        cxt.register(WebConfig.class);
+        cxt.register(WebMvcConfig.class, WebFlowConfig.class);
         cxt.setServletContext(servletContext);
         cxt.refresh();
 

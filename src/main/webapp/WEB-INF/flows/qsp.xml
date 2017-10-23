@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+    <input name="hotelId" />
+
+    <on-start>
+        <evaluate expression="bookingService.createBooking(hotelId)"
+                  result="flowScope.booking" />
+    </on-start>
+
+    <view-state id="enterBookingDetails" model="booking">
+        <binder>
+            <binding property="hotelName"/>
+            <binding property="hotelNum"/>
+        </binder>
+        <transition on="next" to="reviewBooking" />
+    </view-state>
+
+    <view-state id="reviewBooking" model="booking">
+        <binder>
+            <binding property="name"/>
+            <binding property="tel"/>
+        </binder>
+        <transition on="confirm" to="bookingConfirmed" />
+        <transition on="prev" to="enterBookingDetails" />
+        <transition on="cancel" to="bookingCanceled" />
+    </view-state>
+
+    <end-state id="bookingConfirmed">
+            <output name="confirmed" value="booking" />
+    </end-state>
+
+    <view-state id="bookingCanceled" />
+
+</flow>
